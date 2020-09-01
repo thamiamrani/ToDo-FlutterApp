@@ -21,9 +21,9 @@ class ToDoPlaylistItem extends StatelessWidget {
         width: 132,
         child: Card(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(28.0),
           ),
-          elevation: 10,
+          elevation: 12,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(

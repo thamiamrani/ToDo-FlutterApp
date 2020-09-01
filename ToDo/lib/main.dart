@@ -20,7 +20,9 @@ Future<void> main() async {
           create: (_) => appModel,
         ),
       ],
-      child: MainApp(),
+      child: MainApp(
+        appRepository: appRepository,
+      ),
     ),
   );
 }

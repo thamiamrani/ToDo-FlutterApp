@@ -20,6 +20,14 @@ class TaskPlaylistModel extends ChangeNotifier {
   Map<String, dynamic> toJson() =>
       {playlistName: tasks.map((tasks) => (task) => task.toJson()).toList()};
 
+  void addTask(Task task) {
+    tasks.add(task);
+
+    notifyListeners();
+  }
+
+  String getPlaylistName() => playlistName;
+
   void setPlaylistName(String playlistName) {
     this.playlistName = playlistName;
 

@@ -16,7 +16,7 @@ class SharedPreferencesAppRepository {
       return AppModel();
     }
     Map<String, dynamic> data =
-        json.decode(modelAsString) as Map<String, dynamic>;
+        json.decode(modelAsString);
     return AppModel.fromJson(data);
   }
 

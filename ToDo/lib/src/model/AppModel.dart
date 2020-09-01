@@ -1,24 +1,39 @@
+import 'package:ToDo/src/model/TaskModel.dart';
 import 'package:ToDo/src/model/TaskPlaylistModel.dart';
 import 'package:flutter/cupertino.dart';
 
 class AppModel extends ChangeNotifier {
-  List<TaskPlaylistModel> taskPlaylistsModels;
+  Map<String, TaskPlaylistModel> taskPlaylistsModels;
 
   AppModel() {
-    taskPlaylistsModels = [TaskPlaylistModel.empty()];
+    taskPlaylistsModels = {"current": TaskPlaylistModel("current", [])};
   }
 
-  AppModel.fromJson(Map<String, Map<String, dynamic>> json) {
-    List<String> playlistNames = json["app"].keys;
-    taskPlaylistsModels = playlistNames
-        .map((playlistName) =>
-            TaskPlaylistModel.fromJson(json["app"][playlistName]))
-        .toList();
+  AppModel.fromJson(Map<String, dynamic> json) {
+    var playlistNames = json["app"].keys;
+
+    playlistNames.map((playlistName) => taskPlaylistsModels[playlistName] =
+        TaskPlaylistModel.fromJson(json["app"][playlistName]));
   }
 
-  Map<String, dynamic> toJson() => {
-        "app": {
-          ...taskPlaylistsModels.map((value) => value.toJson()).toList(),
-        }
-      };
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {"app": {}};
+    taskPlaylistsModels.values
+        .map((value) => json["app"][value.playlistName] = value.toJson());
+    return json;
+  }
+
+  void addTaskToPlaylist(String playlistName, Task task) {
+    taskPlaylistsModels[playlistName].addTask(task);
+
+    notifyListeners();
+  }
+
+  void addTaskToCurrent(Task task) {
+    taskPlaylistsModels["current"].addTask(task);
+
+    notifyListeners();
+  }
+
+  List<Task> getCurrentTasks() => taskPlaylistsModels["current"].tasks;
 }
