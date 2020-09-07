@@ -54,4 +54,18 @@ class TaskPlaylistModel extends ChangeNotifier {
         (previousValue, element) =>
             element.done ? previousValue : previousValue += 1);
   }
+
+  List<Task> getOrderedTasks() {
+    List<Task> doneTasks = [];
+    List<Task> notDoneTasks = [];
+
+    tasks.forEach((Task task) {
+      task.done ? doneTasks.add(task) : notDoneTasks.add(task);
+    });
+
+    doneTasks.sort((a, b) => b.date.compareTo(a.date));
+    notDoneTasks.sort((a, b) => b.date.compareTo(a.date));
+
+    return [...notDoneTasks, ...doneTasks];
+  }
 }

@@ -8,7 +8,9 @@ class ToDoListItem extends StatelessWidget {
   final void Function() onLongPress;
 
   const ToDoListItem(
-      {@required this.task, @required this.onClick, @required this.onLongPress});
+      {@required this.task,
+      @required this.onClick,
+      @required this.onLongPress});
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +43,12 @@ class ToDoListItem extends StatelessWidget {
             TextStyle(
               color: Colors.grey.shade800,
               decoration: TextDecoration.lineThrough,
-              fontSize: 18,
+              fontSize: 22,
             ),
           )
         : _buildDescriptionText(
             context,
-            TextStyle(fontSize: 18),
+            TextStyle(fontSize: 22),
           );
   }
 

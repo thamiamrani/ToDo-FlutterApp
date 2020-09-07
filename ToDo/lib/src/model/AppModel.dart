@@ -45,7 +45,8 @@ class AppModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Task> getCurrentTasks() => taskPlaylistsModels["current"].tasks;
+  List<Task> getCurrentTasks() =>
+      taskPlaylistsModels["current"].getOrderedTasks();
 
   void modifyCurrentTaskStatus(Task task) {
     taskPlaylistsModels["current"].modifyTaskStatus(task);
