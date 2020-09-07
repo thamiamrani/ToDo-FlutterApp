@@ -39,23 +39,45 @@ class ToDoList extends StatelessWidget {
                       done: false,
                     ),
                   );
-
-                  appRepository.saveAppModel(Provider.of<AppModel>(
-                    context,
-                    listen: false,
-                  ));
+                  save(context);
+                  FocusScope.of(context).unfocus();
                 },
               ),
               Expanded(
                 child: ListView(
                   children: tasks
-                      .map((task) => ToDoListItem(task: task, onClick: () {}))
+                      .map(
+                        (task) => ToDoListItem(
+                          task: task,
+                          onClick: () {
+                            Provider.of<AppModel>(context, listen: false)
+                                .modifyCurrentTaskStatus(task);
+
+                            save(context);
+                          },
+                          onLongPress: () {
+                            Provider.of<AppModel>(context, listen: false)
+                                .deleteTaskFromCurrent(task);
+
+                            save(context);
+                          },
+                        ),
+                      )
                       .toList(),
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void save(BuildContext context) {
+    appRepository.saveAppModel(
+      Provider.of<AppModel>(
+        context,
+        listen: false,
       ),
     );
   }

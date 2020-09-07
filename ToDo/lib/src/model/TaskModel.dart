@@ -1,4 +1,6 @@
-class Task {
+import 'package:flutter/cupertino.dart';
+
+class Task extends ChangeNotifier {
   DateTime date;
   String description;
   bool done;
@@ -15,4 +17,16 @@ class Task {
         "description": description,
         "done": done,
       };
+
+  void modifyTaskStatus() {
+    done = !done;
+
+    notifyListeners();
+  }
+
+  bool equal(Task task) {
+    return task.description == description &&
+        task.date == date &&
+        task.done == done;
+  }
 }

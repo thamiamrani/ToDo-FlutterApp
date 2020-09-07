@@ -4,18 +4,17 @@ import 'package:flutter/material.dart';
 
 class ToDoListItem extends StatelessWidget {
   final Task task;
-
   final void Function() onClick;
+  final void Function() onLongPress;
 
-  const ToDoListItem({
-    @required this.onClick,
-    @required this.task,
-  });
+  const ToDoListItem(
+      {@required this.task, @required this.onClick, @required this.onLongPress});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onClick,
+      onLongPress: onLongPress,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 12),
         child: Row(

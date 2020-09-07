@@ -10,18 +10,24 @@ class TaskPlaylistModel extends ChangeNotifier {
   TaskPlaylistModel.empty();
 
   TaskPlaylistModel.fromJson(Map<String, dynamic> json) {
-    json[json.keys.first]
-        .map((taskAsJson) => Task.fromJson(taskAsJson))
-        .forEach((task) {
-      this.tasks.add(task);
-    });
+    playlistName = json.keys.first;
+    tasks = [];
+
+    json[playlistName]
+        .forEach((taskAsJson) => tasks.add(Task.fromJson(taskAsJson)));
   }
 
   Map<String, dynamic> toJson() =>
-      {playlistName: tasks.map((tasks) => (task) => task.toJson()).toList()};
+      {playlistName: tasks.map((task) => task.toJson()).toList()};
 
   void addTask(Task task) {
     tasks.add(task);
+
+    notifyListeners();
+  }
+
+  void deleteTask(Task task) {
+    tasks.removeWhere((element) => element.equal(task));
 
     notifyListeners();
   }
@@ -32,5 +38,20 @@ class TaskPlaylistModel extends ChangeNotifier {
     this.playlistName = playlistName;
 
     notifyListeners();
+  }
+
+  void modifyTaskStatus(Task task) {
+    Task taskToModify = tasks.firstWhere((element) => element.equal(task));
+
+    taskToModify.modifyTaskStatus();
+
+    notifyListeners();
+  }
+
+  int getRemainingUnDoneTask() {
+    return tasks.fold(
+        0,
+        (previousValue, element) =>
+            element.done ? previousValue : previousValue += 1);
   }
 }

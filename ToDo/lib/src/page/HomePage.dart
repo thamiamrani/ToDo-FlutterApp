@@ -25,7 +25,10 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           HeaderHomePage(
-            tasksLeft: 0,
+            tasksLeft: Provider.of<AppModel>(
+              context,
+              listen: true,
+            ).getRemainingCurrentTask(),
           ),
           const SizedBox(height: 10),
           _buildPlayListBand(),
@@ -40,7 +43,7 @@ class _HomePageState extends State<HomePage> {
                 Center(
                   child: ToDoList(
                     appRepository: this.widget.appRepository,
-                    tasks: Provider.of<AppModel>(context, listen: false)
+                    tasks: Provider.of<AppModel>(context, listen: true)
                         .getCurrentTasks(),
                   ),
                 ),

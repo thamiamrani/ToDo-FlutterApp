@@ -10,16 +10,20 @@ class AppModel extends ChangeNotifier {
   }
 
   AppModel.fromJson(Map<String, dynamic> json) {
-    var playlistNames = json["app"].keys;
+    taskPlaylistsModels = {};
 
-    playlistNames.map((playlistName) => taskPlaylistsModels[playlistName] =
+    List<String> playlistNames = json["app"].keys.toList();
+
+    playlistNames.forEach((playlistName) => taskPlaylistsModels[playlistName] =
         TaskPlaylistModel.fromJson(json["app"][playlistName]));
   }
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {"app": {}};
+
     taskPlaylistsModels.values
-        .map((value) => json["app"][value.playlistName] = value.toJson());
+        .forEach((value) => json["app"][value.playlistName] = value.toJson());
+
     return json;
   }
 
@@ -35,5 +39,21 @@ class AppModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteTaskFromCurrent(Task task) {
+    taskPlaylistsModels["current"].deleteTask(task);
+
+    notifyListeners();
+  }
+
   List<Task> getCurrentTasks() => taskPlaylistsModels["current"].tasks;
+
+  void modifyCurrentTaskStatus(Task task) {
+    taskPlaylistsModels["current"].modifyTaskStatus(task);
+
+    notifyListeners();
+  }
+
+  int getRemainingCurrentTask() {
+    return taskPlaylistsModels["current"].getRemainingUnDoneTask();
+  }
 }
