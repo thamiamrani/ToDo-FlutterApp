@@ -33,28 +33,22 @@ class AppModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addTaskToCurrent(Task task) {
-    taskPlaylistsModels["current"].addTask(task);
+  void deleteTaskFromPlaylist(String playlistName, Task task) {
+    taskPlaylistsModels[playlistName].deleteTask(task);
 
     notifyListeners();
   }
 
-  void deleteTaskFromCurrent(Task task) {
-    taskPlaylistsModels["current"].deleteTask(task);
+  List<Task> getPlaylistTasks(String playlistName) =>
+      taskPlaylistsModels[playlistName].getOrderedTasks();
+
+  void modifyTaskOfPlaylistStatus(String playlistName, Task task) {
+    taskPlaylistsModels[playlistName].modifyTaskStatus(task);
 
     notifyListeners();
   }
 
-  List<Task> getCurrentTasks() =>
-      taskPlaylistsModels["current"].getOrderedTasks();
-
-  void modifyCurrentTaskStatus(Task task) {
-    taskPlaylistsModels["current"].modifyTaskStatus(task);
-
-    notifyListeners();
-  }
-
-  int getRemainingCurrentTask() {
-    return taskPlaylistsModels["current"].getRemainingUnDoneTask();
+  int getRemainingNumberOfTask(String playlistName) {
+    return taskPlaylistsModels[playlistName].getRemainingUnDoneTask();
   }
 }

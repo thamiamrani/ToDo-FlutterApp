@@ -1,6 +1,7 @@
 import 'package:ToDo/src/model/AppModel.dart';
 import 'package:ToDo/src/page/HeaderHomePage.dart';
 import 'package:ToDo/src/repository/AppRepository.dart';
+import 'package:ToDo/src/widget/ToDo/CreatePlaylistDialog.dart';
 import 'package:ToDo/src/widget/ToDo/ToDoList.dart';
 import 'package:ToDo/src/widget/playListWidgets/ToDoPlaylistBand.dart';
 import 'package:ToDo/src/widget/playListWidgets/ToDoPlaylistItem.dart';
@@ -18,6 +19,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  static const String CURRENT_PLAYLISTNAME = "current";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +31,7 @@ class _HomePageState extends State<HomePage> {
             tasksLeft: Provider.of<AppModel>(
               context,
               listen: true,
-            ).getRemainingCurrentTask(),
+            ).getRemainingNumberOfTask(CURRENT_PLAYLISTNAME),
           ),
           const SizedBox(height: 10),
           _buildPlayListBand(),
@@ -43,8 +46,9 @@ class _HomePageState extends State<HomePage> {
                 Center(
                   child: ToDoList(
                     appRepository: this.widget.appRepository,
+                    playListName: CURRENT_PLAYLISTNAME,
                     tasks: Provider.of<AppModel>(context, listen: true)
-                        .getCurrentTasks(),
+                        .getPlaylistTasks(CURRENT_PLAYLISTNAME),
                   ),
                 ),
               ],
@@ -61,12 +65,14 @@ class _HomePageState extends State<HomePage> {
       height: 125,
       child: ToDoPlaylistBand(
         toDoPlaylistItems: [
-          ToDoPlaylistItem(
-            listName: "Créer une playlist",
-            imageUrl: "assets/images/add.svg",
-            onCLick: () {
-              print("ok");
-            },
+          CreatePlaylistDialog(
+            child: ToDoPlaylistItem(
+              listName: "Créer une playlist",
+              imageUrl: "assets/images/add.svg",
+              onCLick: () {
+                print("ok");
+              },
+            ),
           ),
           ToDoPlaylistItem(
             listName: "Playlist 1",

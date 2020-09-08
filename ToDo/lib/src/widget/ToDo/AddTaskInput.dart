@@ -12,6 +12,13 @@ class AddTaskInput extends StatefulWidget {
 
 class _AddTaskInputState extends State<AddTaskInput> {
   final TextEditingController textEditingController = TextEditingController();
+  Color iconColor;
+
+  @override
+  void initState() {
+    iconColor = Colors.grey;
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -27,6 +34,13 @@ class _AddTaskInputState extends State<AddTaskInput> {
           child: TextField(
             controller: textEditingController,
             decoration: InputDecoration(hintText: "Ajouter une tâche"),
+            onChanged: (value) {
+              if (value.isNotEmpty) {
+                setState(() {
+                  iconColor = Colors.black;
+                });
+              }
+            },
           ),
         ),
         const SizedBox(
@@ -36,9 +50,13 @@ class _AddTaskInputState extends State<AddTaskInput> {
           onTap: () {
             widget.onAdd(textEditingController.value.text);
             textEditingController.clear();
+            setState(() {
+              iconColor = Colors.grey;
+            });
           },
           child: Icon(
             Icons.add,
+            color: iconColor,
             size: 30,
           ),
         ),

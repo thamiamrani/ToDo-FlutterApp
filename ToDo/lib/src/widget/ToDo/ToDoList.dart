@@ -9,10 +9,12 @@ import 'package:provider/provider.dart';
 
 class ToDoList extends StatelessWidget {
   final SharedPreferencesAppRepository appRepository;
+  final String playListName;
   final List<Task> tasks;
 
   const ToDoList({
     @required this.appRepository,
+    @required this.playListName,
     @required this.tasks,
   });
 
@@ -32,14 +34,17 @@ class ToDoList extends StatelessWidget {
             children: [
               AddTaskInput(
                 onAdd: (value) {
-                  Provider.of<AppModel>(context, listen: false)
-                      .addTaskToCurrent(
-                    Task(
-                      description: value,
-                      done: false,
-                    ),
-                  );
-                  save(context);
+                  if (value.isNotEmpty) {
+                    Provider.of<AppModel>(context, listen: false)
+                        .addTaskToPlaylist(
+                      playListName,
+                      Task(
+                        description: value,
+                        done: false,
+                      ),
+                    );
+                    save(context);
+                  }
                   FocusScope.of(context).unfocus();
                 },
               ),
@@ -51,13 +56,13 @@ class ToDoList extends StatelessWidget {
                           task: task,
                           onClick: () {
                             Provider.of<AppModel>(context, listen: false)
-                                .modifyCurrentTaskStatus(task);
+                                .modifyTaskOfPlaylistStatus(playListName, task);
 
                             save(context);
                           },
                           onLongPress: () {
                             Provider.of<AppModel>(context, listen: false)
-                                .deleteTaskFromCurrent(task);
+                                .deleteTaskFromPlaylist(playListName, task);
 
                             save(context);
                           },

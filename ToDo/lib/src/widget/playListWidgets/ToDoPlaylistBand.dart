@@ -1,9 +1,8 @@
-import 'package:ToDo/src/widget/playListWidgets/ToDoPlaylistItem.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 
 class ToDoPlaylistBand extends StatelessWidget {
-  final List<ToDoPlaylistItem> toDoPlaylistItems;
+  final List<Widget> toDoPlaylistItems;
 
   ToDoPlaylistBand({
     @required this.toDoPlaylistItems,
