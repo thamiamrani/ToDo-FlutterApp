@@ -5,18 +5,21 @@ import 'package:flutter_svg/flutter_svg.dart';
 class ToDoPlaylistItem extends StatelessWidget {
   final String listName;
   final String imageUrl;
-  final void Function() onCLick;
+  final void Function() onTap;
+  final void Function() onLongPress;
 
   const ToDoPlaylistItem({
     @required this.listName,
     @required this.imageUrl,
-    @required this.onCLick,
+    this.onTap,
+    this.onLongPress,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onCLick,
+      onTap: onTap,
+      onLongPress: onLongPress,
       child: Container(
         width: 132,
         child: Card(

@@ -47,8 +47,6 @@ class _HomePageState extends State<HomePage> {
                   child: ToDoList(
                     appRepository: this.widget.appRepository,
                     playListName: CURRENT_PLAYLISTNAME,
-                    tasks: Provider.of<AppModel>(context, listen: true)
-                        .getPlaylistTasks(CURRENT_PLAYLISTNAME),
                   ),
                 ),
               ],
@@ -66,21 +64,37 @@ class _HomePageState extends State<HomePage> {
       child: ToDoPlaylistBand(
         toDoPlaylistItems: [
           CreatePlaylistDialog(
+            appRepository: this.widget.appRepository,
+            onCreate: (value) {
+              Provider.of<AppModel>(context, listen: false)
+                  .createPlaylist(value);
+
+              save(context);
+            },
             child: ToDoPlaylistItem(
               listName: "Créer une playlist",
               imageUrl: "assets/images/add.svg",
-              onCLick: () {
-                print("ok");
-              },
             ),
           ),
-          ToDoPlaylistItem(
-            listName: "Playlist 1",
-            imageUrl: "assets/images/list.svg",
-            onCLick: () {
-              print("ok123");
-            },
-          ),
+          ...Provider.of<AppModel>(context, listen: true)
+              .getPlaylistNames()
+              .map((name) {
+            return ToDoPlaylistItem(
+                listName: name,
+                imageUrl: "assets/images/list.svg",
+                onTap: () {
+                  Provider.of<AppModel>(context, listen: false)
+                      .transferListToCurrent(name);
+
+                  save(context);
+                },
+                onLongPress: () {
+                  Provider.of<AppModel>(context, listen: false)
+                      .deletePlaytlist(name);
+
+                  save(context);
+                });
+          }).toList(),
         ],
       ),
     );
@@ -106,5 +120,14 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  void save(BuildContext context) {
+    this.widget.appRepository.saveAppModel(
+          Provider.of<AppModel>(
+            context,
+            listen: false,
+          ),
+        );
   }
 }

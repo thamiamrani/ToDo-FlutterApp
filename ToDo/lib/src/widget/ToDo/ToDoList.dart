@@ -10,12 +10,10 @@ import 'package:provider/provider.dart';
 class ToDoList extends StatelessWidget {
   final SharedPreferencesAppRepository appRepository;
   final String playListName;
-  final List<Task> tasks;
 
   const ToDoList({
     @required this.appRepository,
     @required this.playListName,
-    @required this.tasks,
   });
 
   @override
@@ -50,7 +48,8 @@ class ToDoList extends StatelessWidget {
               ),
               Expanded(
                 child: ListView(
-                  children: tasks
+                  children: Provider.of<AppModel>(context, listen: true)
+                      .getPlaylistTasks(playListName)
                       .map(
                         (task) => ToDoListItem(
                           task: task,
