@@ -3,6 +3,7 @@ import 'package:ToDo/src/page/HeaderHomePage.dart';
 import 'package:ToDo/src/repository/AppRepository.dart';
 import 'package:ToDo/src/widget/ToDo/CreatePlaylistDialog.dart';
 import 'package:ToDo/src/widget/ToDo/ToDoList.dart';
+import 'package:ToDo/src/widget/ToDo/ToDoListView.dart';
 import 'package:ToDo/src/widget/playListWidgets/ToDoPlaylistBand.dart';
 import 'package:ToDo/src/widget/playListWidgets/ToDoPlaylistItem.dart';
 import 'package:flutter/cupertino.dart';
@@ -83,6 +84,22 @@ class _HomePageState extends State<HomePage> {
                 listName: name,
                 imageUrl: "assets/images/list.svg",
                 onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext builderContext) {
+                      return Dialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(28),
+                        ),
+                        child: ToDoListView(
+                          appRepository: this.widget.appRepository,
+                          playlistName: name,
+                        ),
+                      );
+                    },
+                  );
+                },
+                onDoubleTap: () {
                   Provider.of<AppModel>(context, listen: false)
                       .transferListToCurrent(name);
 

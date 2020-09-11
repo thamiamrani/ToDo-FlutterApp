@@ -7,18 +7,21 @@ class ToDoPlaylistItem extends StatelessWidget {
   final String imageUrl;
   final void Function() onTap;
   final void Function() onLongPress;
+  final void Function() onDoubleTap;
 
   const ToDoPlaylistItem({
     @required this.listName,
     @required this.imageUrl,
     this.onTap,
     this.onLongPress,
+    this.onDoubleTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
+      onDoubleTap: onDoubleTap,
       onLongPress: onLongPress,
       child: Container(
         width: 132,

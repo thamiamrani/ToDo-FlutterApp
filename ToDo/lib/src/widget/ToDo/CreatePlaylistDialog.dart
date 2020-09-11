@@ -1,5 +1,5 @@
 import 'package:ToDo/src/repository/AppRepository.dart';
-import 'package:ToDo/src/widget/ToDo/ToDoList.dart';
+import 'package:ToDo/src/widget/ToDo/ToDoListView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,10 +8,11 @@ class CreatePlaylistDialog extends StatefulWidget {
   final void Function(String) onCreate;
   final Widget child;
 
-  CreatePlaylistDialog(
-      {@required this.appRepository,
-      @required this.onCreate,
-      @required this.child});
+  CreatePlaylistDialog({
+    @required this.appRepository,
+    @required this.onCreate,
+    @required this.child,
+  });
 
   @override
   _CreatePlaylistDialogState createState() => _CreatePlaylistDialogState();
@@ -95,14 +96,11 @@ class _CreatePlaylistDialogState extends State<CreatePlaylistDialog> {
       builder: (BuildContext builderContext) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(28),
           ),
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.65,
-            child: ToDoList(
-              appRepository: this.widget.appRepository,
-              playListName: _currentPlaylistName,
-            ),
+          child: ToDoListView(
+            appRepository: this.widget.appRepository,
+            playlistName: _currentPlaylistName,
           ),
         );
       },

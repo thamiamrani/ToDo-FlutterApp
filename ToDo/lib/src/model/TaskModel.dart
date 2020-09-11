@@ -7,6 +7,11 @@ class Task extends ChangeNotifier {
 
   Task({this.description, this.done}) : this.date = DateTime.now();
 
+  Task.clone(Task other)
+      : this.date = DateTime.now(),
+        this.description = other.description,
+        this.done = false;
+
   Task.fromJson(Map<String, dynamic> json)
       : date = DateTime.fromMillisecondsSinceEpoch(json["date"]),
         description = json["description"],

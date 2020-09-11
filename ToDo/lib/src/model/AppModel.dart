@@ -73,7 +73,7 @@ class AppModel extends ChangeNotifier {
         taskPlaylistsModels[playlistName].getOrderedTasks());
 
     taskFromPlaylist.forEach((task) {
-      addTaskToPlaylist("current", task);
+      addTaskToPlaylist("current", Task.clone(task));
     });
 
     notifyListeners();

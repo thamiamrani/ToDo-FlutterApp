@@ -31,15 +31,15 @@ class HeaderHomePage extends StatelessWidget {
         Column(
           children: [
             _buildLabel(
-              35,
-              "Bonjour Thami,",
+              30,
+              "Bonjour Junko,",
               const EdgeInsets.fromLTRB(10, 55, 0, 0),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.07,
             ),
             _buildLabel(
-              21,
+              19,
               "Tâches à faire : $tasksLeft",
               const EdgeInsets.only(left: 10),
             ),
